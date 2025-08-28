@@ -29,6 +29,8 @@ def save_selected_variables(ds: Dataset,
                             var_names: dict[str, str],
                             var_attrs: dict[str, dict],
                             var_factor: dict[str, float],
+                            var_dtype: dict[str, str],
+                            var_dims: dict[str, list[str]],
                             fill_value: float) -> None:
         
         # Copy selected variables
@@ -42,9 +44,12 @@ def save_selected_variables(ds: Dataset,
                 if var_name in new_ds.variables:
                     var_name_dst = var_name_dst + f"_{group}"
 
-                print(f"writing variable {var_name}: {var_name_dst}, {var.dimensions}, {var.dtype}")
+                print(f"writing variable {var_name}: {var_name_dst}, {var_dims[var_name_dst]}, {var_dtype[var_name_dst]}")
 
-                new_var = new_ds.createVariable(var_name_dst, var.dtype, var.dimensions, fill_value=fill_value)
+                new_var = new_ds.createVariable(var_name_dst, 
+                                                var_dtype[var_name_dst], 
+                                                var_dims[var_name_dst], 
+                                                fill_value=fill_value)
                 new_var[:] = (var[:] * var_factor.get(var_name_dst, 1.0)).astype('float32')
 
                 new_var.setncattr('missing_value', np.float32(fill_value))
@@ -71,19 +76,20 @@ def main():
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
     print("Loaded config:", config)
-    variables_dict = config['variables'] if isinstance(config, dict) and 'variables' in config else {}
-
-    if not variables_dict:
-        print("No variables found for any group.")
-        return
 
     # Read settings from config
-    dims_dict = config['dimensions'] if isinstance(config, dict) and 'dimensions' in config else {}
-    names_dict = config['variable_names'] if isinstance(config, dict) and 'variable_names' in config else {}
-    var_attrs_dict = config['variable_attributes'] if isinstance(config, dict) and 'variable_attributes' in config else {}
-    var_factor_dict = config['variable_factor'] if isinstance(config, dict) and 'variable_factor' in config else {}
-    global_attrs_dict = config['global_attributes'] if isinstance(config, dict) and 'global_attributes' in config else {}
-    
+    if isinstance(config, dict):
+        variables_dict = config['variables'] if 'variables' in config else {}
+        dims_dict = config['dimensions'] if 'dimensions' in config else {}
+        names_dict = config['variable_names'] if 'variable_names' in config else {}
+        var_attrs_dict = config['variable_attributes'] if 'variable_attributes' in config else {}
+        var_factor_dict = config['variable_factor'] if 'variable_factor' in config else {}
+        var_dtype_dict = config['variable_dtype'] if 'variable_dtype' in config else {}
+        var_dims_dict = config['variable_dimensions'] if 'variable_dimensions' in config else {}
+        global_attrs_dict = config['global_attributes'] if 'global_attributes' in config else {}
+    else:
+         ValueError("Configuration file is empty or invalid.")
+
     # Make the dataset
     with Dataset(out_path, 'w', format='NETCDF4_CLASSIC') as new_ds:
         
@@ -94,7 +100,7 @@ def main():
         
         # Create time coordinate variable and array
         time_var = new_ds.createVariable('time', 'int32', 'time')
-        time_arr = (np.repeat(np.arange(1, 365, dims_dict['time']['day_step'])[:, np.newaxis], 
+        time_arr = (np.repeat(np.arange(0, 365, dims_dict['time']['day_step'])[:, np.newaxis], 
                               dims_dict['time']['years'],
                               axis=1)\
                            + 365 * np.arange(0, dims_dict['time']['years'])).T.flatten()
@@ -113,7 +119,16 @@ def main():
         for group in groups:
             ds = open_mfdataset_from_config(config_path, group)
             variables = variables_dict.get(group, [])
-            save_selected_variables(ds, new_ds, group, variables, names_dict, var_attrs_dict, var_factor_dict, fill_value=fill_value)
+            save_selected_variables(ds, 
+                                    new_ds, 
+                                    group, 
+                                    variables, 
+                                    names_dict, 
+                                    var_attrs_dict, 
+                                    var_factor_dict, 
+                                    var_dtype_dict,
+                                    var_dims_dict,
+                                    fill_value=fill_value)
             print(f"Saved selected variables for group {group} to {out_path}")
 
         # Calculate Ecosystem Water-Use Efficiency

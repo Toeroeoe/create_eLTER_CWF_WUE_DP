@@ -33,6 +33,7 @@ paths:
   grid: /p/data1/jibg31/CLM5_EU3_eLTER/outputs/006/join_8daily/
   pft: /p/data1/jibg31/CLM5_EU3_eLTER/outputs/006/join_8daily/pft/
   forcings: /p/data1/jibg31/poppe1/HOLIDROUGHT/variables/
+  surface: /p/scratch/cjibg31/jibg3105/CESMDataRoot/InputData/lnd/clm2/surfdata_map/surfdata_CLM5EU3_v4_pos.nc
 
 variables:
   coords:
@@ -42,19 +43,97 @@ variables:
     - GPP
     - QFLX_EVAP_TOT
     - QFLX_EVAP_VEG
-#    - H2OSOI
+    - TLAI
+    - TOTVEGC
+    - TOTSOMC
+    #- H2OSOI
+  forcings:
+    - VPD
+    - P
+  surface:
+    - PCT_CROP
+    - PCT_NATVEG
+    - PCT_CFT
+    - PCT_NAT_PFT
 #  pft:
 #    - GPP
 #    - Tr
 #    - ET
-  forcings:
-    - VPD
-    - P
 
 variable_factor:
   GPP: 86400
   ET: 86400
   Tr: 86400
+
+variable_dtype: 
+  GPP: float32
+  ET: float32
+  Tr: float32
+  P: float32
+  VPD: float32
+  TLAI: float32
+  TOTVEGC: float32
+  TOTSOMC: float32
+  PCT_CFT: float32
+  PCT_NAT_PFT: float32
+  PCT_CROP: float32
+  PCT_NATVEG: float32
+  latitude: float32
+  longitude: float32
+
+variable_dimensions:
+  GPP:
+    - time
+    - lat
+    - lon
+  ET: 
+    - time
+    - lat
+    - lon
+  Tr:
+    - time
+    - lat
+    - lon
+  P: 
+    - time
+    - lat
+    - lon
+  VPD:
+    - time
+    - lat
+    - lon
+  TLAI:
+    - time
+    - lat
+    - lon
+  TOTVEGC:
+    - time
+    - lat
+    - lon
+  TOTSOMC:
+    - time
+    - lat
+    - lon
+  PCT_CROP:
+    - lat
+    - lon
+  PCT_NATVEG:
+    - lat
+    - lon
+  PCT_CFT:
+    - lat
+    - lon
+  PCT_NAT_PFT:
+    - lat
+    - lon
+  latitude:
+    - lat
+    - lon
+  longitude:
+    - lat
+    - lon
+  time: 
+    - time
 
 variable_names:
   GPP: GPP
@@ -79,6 +158,7 @@ variable_attributes:
     calendar: standard
     units: days since 1995-01-01
     standard_name: time
+    timestamp_label_side: left
   GPP:
     units: gC m-2 day-1
     standard_name: gross_primary_productivity
@@ -123,7 +203,7 @@ variable_attributes:
 global_attributes:
   conventions: CF-1.8
   conventions_url: http://www.cfconventions.org
-  licence: FZJ European 3km Community Land Model v5 - Biogeochemical mode Water-Use Efficiency Dataset (c) 2025 by Christian Poppe Terán, Alexandre Belleflamme, Bibi S. Naz, Harrie-Jan Hendricks-Franssen, and Harry Vereecken of Forschungszentrum Jülich (Germany) is licensed under Creative Commons Attribution 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
+  licence: FZJ European 3km Community Land Model v5 - Biogeochemical Mode; Water-Use Efficiency Dataset (c) 2025 by Christian Poppe Terán, Alexandre Belleflamme, Bibi S. Naz, Harrie-Jan Hendricks-Franssen, and Harry Vereecken of Forschungszentrum Jülich (Germany) is licensed under Creative Commons Attribution 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
   licence_url: https://creativecommons.org/licenses/by/4.0/deed.en
   experiment: CLM5_BGC_EU3_eLTER_006
   land_surface_model: Community Land Movel v5 
