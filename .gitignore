@@ -2,4 +2,4 @@ out/*
 venv/venv/*
 venv/python
 .vscode/*
-.gitignore/
+.gitignore
