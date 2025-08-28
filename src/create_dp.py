@@ -28,7 +28,8 @@ def save_selected_variables(ds: Dataset,
                             variables: list[str],
                             var_names: dict[str, str],
                             var_attrs: dict[str, dict],
-                            var_factor: dict[str, float]) -> None:
+                            var_factor: dict[str, float],
+                            fill_value: float) -> None:
         
         # Copy selected variables
         for var_name in variables:
@@ -43,9 +44,10 @@ def save_selected_variables(ds: Dataset,
 
                 print(f"writing variable {var_name}: {var_name_dst}, {var.dimensions}, {var.dtype}")
 
-                new_var = new_ds.createVariable(var_name_dst, var.dtype, var.dimensions)
+                new_var = new_ds.createVariable(var_name_dst, var.dtype, var.dimensions, fill_value=fill_value)
                 new_var[:] = (var[:] * var_factor.get(var_name_dst, 1.0)).astype('float32')
 
+                new_var.setncattr('missing_value', np.float32(fill_value))
                 # Variable attributes
                 for attr, key in var_attrs.get(var_name_dst, {}).items():
                     new_var.setncattr(attr, key)
@@ -59,7 +61,9 @@ def main():
     out_dir = '../out/CWF_WUE_DP/'
     out_file = 'out.nc'
     groups = ['coords', 'grid', 'pft', 'forcings']
+    fill_value = 1e20
     
+    # Directories
     os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, out_file)
 
@@ -109,7 +113,7 @@ def main():
         for group in groups:
             ds = open_mfdataset_from_config(config_path, group)
             variables = variables_dict.get(group, [])
-            save_selected_variables(ds, new_ds, group, variables, names_dict, var_attrs_dict, var_factor_dict)
+            save_selected_variables(ds, new_ds, group, variables, names_dict, var_attrs_dict, var_factor_dict, fill_value=fill_value)
             print(f"Saved selected variables for group {group} to {out_path}")
 
         # Calculate Ecosystem Water-Use Efficiency
@@ -121,7 +125,7 @@ def main():
             ewue = np.where(et[:] != 0, gpp[:] / et[:], np.nan).astype('float32')
             ewue = np.where(((ewue > 0) & (ewue < 30)), ewue, np.nan).astype('float32')
             print(f"writing variable EWUE: EWUE, {gpp.dimensions}, float32")
-            new_var = new_ds.createVariable('EWUE', 'float32', gpp.dimensions)
+            new_var = new_ds.createVariable('EWUE', 'float32', gpp.dimensions, fill_value=fill_value)
             new_var[:] = ewue
             for attr, key in var_attrs_dict.get('EWUE', {}).items():
                     new_var.setncattr(attr, key)
@@ -135,7 +139,7 @@ def main():
             twue = np.where(tr[:] != 0, gpp[:] / tr[:], np.nan).astype('float32')
             twue = np.where(((twue > 0) & (twue < 30)), twue, np.nan).astype('float32')
             print(f"writing variable TWUE: TWUE, {gpp.dimensions}, float32")
-            new_var = new_ds.createVariable('TWUE', 'float32', gpp.dimensions)
+            new_var = new_ds.createVariable('TWUE', 'float32', gpp.dimensions, fill_value=fill_value)
             new_var[:] = twue
             for attr, key in var_attrs_dict.get('TWUE', {}).items():
                     new_var.setncattr(attr, key)
@@ -151,7 +155,7 @@ def main():
             iwue = np.where(gc[:] != 0, gpp[:] / gc[:], np.nan).astype('float32')
             iwue = np.where(((iwue > 0) & (iwue < 30)), iwue, np.nan).astype('float32')
             print(f"writing variable IWUE: IWUE, {gpp.dimensions}, float32")
-            new_var = new_ds.createVariable('IWUE', 'float32', gpp.dimensions)
+            new_var = new_ds.createVariable('IWUE', 'float32', gpp.dimensions, fill_value=fill_value)
             new_var[:] = iwue
             for attr, key in var_attrs_dict.get('IWUE', {}).items():
                     new_var.setncattr(attr, key)
