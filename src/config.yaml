@@ -1,0 +1,150 @@
+dimensions:
+  time: 
+    size: 1104
+    limited: True
+    day_step: 8
+    years: 24
+  lat: 
+    size: 1544
+    limited: False
+  lon: 
+    size: 1592
+    limited: False
+  vegtype:
+    size: 15
+    limited: False
+    selection:
+      NET:
+        - 1
+        - 2
+      BDT:
+        - 7
+        - 8
+      GRA:
+        - 12
+        - 13
+        - 14
+      CRO:
+        - 15
+        - 16
+
+paths:
+  coords: /p/data1/jibg31/poppe1/EDWUE/EDWUE/8daily/
+  grid: /p/data1/jibg31/CLM5_EU3_eLTER/outputs/006/join_8daily/
+  pft: /p/data1/jibg31/CLM5_EU3_eLTER/outputs/006/join_8daily/pft/
+  forcings: /p/data1/jibg31/poppe1/HOLIDROUGHT/variables/
+
+variables:
+  coords:
+    - latitude
+    - longitude
+  grid:
+    - GPP
+    - QFLX_EVAP_TOT
+    - QFLX_EVAP_VEG
+#    - H2OSOI
+#  pft:
+#    - GPP
+#    - Tr
+#    - ET
+  forcings:
+    - VPD
+    - P
+
+variable_factor:
+  GPP: 86400
+  ET: 86400
+  Tr: 86400
+
+variable_names:
+  GPP: GPP
+  QFLX_EVAP_TOT: ET
+  QFLX_EVAP_VEG: Tr
+  P: Precip
+  VPD: VPD
+  latitude: latitude
+  longitude: longitude
+  time: time
+
+variable_attributes:
+  latitude:
+    units: degrees_north
+    standard_name: latitude
+    long_name: Latitude
+  longitude:
+    units: degrees_east
+    standard_name: longitude
+    long_name: Longitude
+  time:
+    calendar: standard
+    units: days since 1995-01-01
+    standard_name: time
+  GPP:
+    units: gC m-2 day-1
+    standard_name: gross_primary_productivity
+    long_name: Gross Primary Productivity
+    source: land surface model
+  ET:
+    units: mm m-2 day-1
+    standard_name: evapotranspiration
+    long_name: Evapotranspiration
+    source: land surface model
+  Tr:
+    units: mm m-2 day-1
+    standard_name: transpiration
+    long_name: Transpiration
+    source: land surface model
+  VPD:
+    units: kPa
+    standard_name: vapor_pressure_deficit
+    long_name: Vapor Pressure Deficit
+    source: atmospheric model
+  Precip:
+    units: mm day-1
+    standard_name: precipitation
+    long_name: Precipitation
+    source: atmospheric model
+  EWUE:
+    units: gC mm-1 
+    standard_name: ecosystem_water_use_efficiency
+    long_name: Ecosystem Water Use Efficiency
+    calculation: GPP / ET
+  TWUE:
+    units: gC mm-1
+    standard_name: transpiration_water_use_efficiency
+    long_name: Transpiration Water Use Efficiency
+    calculation: GPP / Tr
+  IWUE:
+    units: gC kPa mm-1
+    standard_name: inherent_water_use_efficiency
+    long_name: Inherent Water Use Efficiency
+    calculation: GPP * (Tr/VPD)
+
+global_attributes:
+  conventions: CF-1.8
+  conventions_url: http://www.cfconventions.org
+  licence: FZJ European 3km CLM5-BGC Water-Use Efficiency Dataset (c) 2025 by Christian Poppe Terán, Alexandre Belleflamme, Bibi S. Naz, Harrie-Jan Hendricks-Franssen, and Harry Vereecken of Forschungszentrum Jülich (Germany) is licensed under Creative Commons Attribution 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
+  licence_url: https://creativecommons.org/licenses/by/4.0/deed.en
+  experiment: CLM5_BGC_EU3_eLTER_006
+  land_surface_model: CLM5-BGC
+  land_surface_model_version: release-clm5.0.34-24-gdc5ea974
+  surface_dataset: surfdata_CLM5EU3_FATES_east[west]_v3.nc
+  atmospheric_data: COSMOREA6
+  atmospheric_data_link: https://reanalysis.meteo.uni-bonn.de/?COSMO-REA6
+  atmospheric_postprocessing: remapped via ESMF_regrid_with_weights, first-order conservative
+  postprocessing: resampled to 8-daily means and transformed to [per day] units
+  project: eLTER PLUS
+  domain: CORDEX-EU
+  DOI: ""
+  created by: Christian Poppe Terán
+  citation: Poppe Terán, Christian; Belleflamme, Alexandre; Naz S., Bibi; Hendricks-Franssen, Harrie-Jan; Vereecken, Harry; 2025, "European 3km CLM5-BGC Water-Use Efficiency Dataset", https://doi.org/10.26165/JUELICH-DATA/GROHKP, Jülich DATA, V1
+  title: European 3km CLM5-BGC Water-Use Efficiency Dataset
+  comment: "Land surface model simulation performed by Research Centre Juelich, Institute of Bio- and Geosciences (IBG-3); simulation and processing: Christian Poppe Terán c.poppe@fz-juelich.de (ORCID=0000-0003-2283-0462), Alexandre Belleflamme, Bibi S. Naz, Harrie-Jan Hendricks-Franssen, Harry Vereecken"
+  date: "2025-08-27"
+  version: 1.0
+  institution: Institute of Bio and Geosciences - Agrosphere (IBG-3), Research Centre Jülich
+  contact: c.poppe@fz-juelich.de
+  acknowledgments: This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 871128 (eLTER PLUS). The creator gratefully acknowledges the computing time granted through JARA on the supercomputer JURECA at Research Centre Jülich.
+
+
+
