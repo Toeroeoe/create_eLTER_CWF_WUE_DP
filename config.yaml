@@ -22,21 +22,6 @@ dimensions:
   pft:
     size: 17
     limited: True
-    #selection:
-    #  NET:
-    #    - 1
-    #    - 2
-    #  BDT:
-    #    - 7
-    #    - 8
-    #  GRA:
-    #    - 12
-    #    - 13
-    #    - 14
-    #  CRO:
-    #    - 15
-    #    - 16
-
 
 paths:
   coords: /p/data1/jibg31/poppe1/EDWUE/EDWUE/8daily/
@@ -50,21 +35,21 @@ variables:
     - latitude
     - longitude
   grid:
-    #- GPP
-    #- QFLX_EVAP_TOT
-    #- QFLX_EVAP_VEG
-    #- TLAI
-    #- TOTVEGC
-    #- TOTSOMC
-    #- H2OSOI
+    - GPP
+    - QFLX_EVAP_TOT
+    - QFLX_EVAP_VEG
+    - TLAI
+    - TOTVEGC
+    - TOTSOMC
+    - H2OSOI
   forcings:
-    #- VPD
-    #- P
+    - VPD
+    - P
   surface:
-    #- PCT_CROP
-    #- PCT_NATVEG
-    #- PCT_CFT
-    #- PCT_NAT_PFT
+    - PCT_CROP
+    - PCT_NATVEG
+    - PCT_CFT
+    - PCT_NAT_PFT
   pft:
     - GPP
     - Tr
