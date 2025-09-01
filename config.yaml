@@ -69,9 +69,9 @@ variable_dtype:
   GPP: float32
   ET: float32
   Tr: float32
-  P: float32
+  Precip: float32
   VPD: float32
-  TLAI: float32
+  LAI: float32
   TOTVEGC: float32
   TOTSOMC: float32
   PCT_CFT: float32
@@ -94,7 +94,7 @@ variable_dimensions:
     - time
     - lat
     - lon
-  P: 
+  Precip: 
     - time
     - lat
     - lon
@@ -102,7 +102,7 @@ variable_dimensions:
     - time
     - lat
     - lon
-  TLAI:
+  LAI:
     - time
     - lat
     - lon
@@ -141,6 +141,7 @@ variable_names:
   QFLX_EVAP_VEG: Tr
   P: Precip
   VPD: VPD
+  TLAI: LAI
   latitude: latitude
   longitude: longitude
   time: time

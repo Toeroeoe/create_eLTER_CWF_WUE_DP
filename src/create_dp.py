@@ -50,7 +50,7 @@ def save_selected_variables(ds: Dataset,
                                                 var_dtype[var_name_dst], 
                                                 var_dims[var_name_dst], 
                                                 fill_value=fill_value)
-                new_var[:] = (var[:] * var_factor.get(var_name_dst, 1.0)).astype('float32')
+                new_var[:] = (var[:] * var_factor.get(var_name_dst, 1.0)).astype(var_dtype[var_name_dst])
 
                 new_var.setncattr('missing_value', np.float32(fill_value))
                 # Variable attributes
@@ -63,9 +63,9 @@ def save_selected_variables(ds: Dataset,
 def main():
     # Settings
     config_path = 'config.yaml'
-    out_dir = '../out/CWF_WUE_DP/'
+    out_dir = 'out/CWF_WUE_DP/'
     out_file = 'out.nc'
-    groups = ['coords', 'grid', 'pft', 'forcings']
+    groups = ['coords', 'grid', 'pft', 'forcings', 'surface']
     fill_value = 1e20
     
     # Directories
