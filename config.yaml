@@ -19,6 +19,9 @@ dimensions:
   vegtype:
     size: 15
     limited: True
+  pft:
+    size: 17
+    limited: True
     #selection:
     #  NET:
     #    - 1
@@ -47,21 +50,21 @@ variables:
     - latitude
     - longitude
   grid:
-    - GPP
-    - QFLX_EVAP_TOT
-    - QFLX_EVAP_VEG
-    - TLAI
-    - TOTVEGC
-    - TOTSOMC
-    - H2OSOI
+    #- GPP
+    #- QFLX_EVAP_TOT
+    #- QFLX_EVAP_VEG
+    #- TLAI
+    #- TOTVEGC
+    #- TOTSOMC
+    #- H2OSOI
   forcings:
-    - VPD
-    - P
+    #- VPD
+    #- P
   surface:
-    - PCT_CROP
-    - PCT_NATVEG
-    - PCT_CFT
-    - PCT_NAT_PFT
+    #- PCT_CROP
+    #- PCT_NATVEG
+    #- PCT_CFT
+    #- PCT_NAT_PFT
   pft:
     - GPP
     - Tr
@@ -88,10 +91,13 @@ variable_dtype:
   GPP: float32
   ET: float32
   Tr: float32
+  GPP_pft: float32
+  ET_pft: float32
+  Tr_pft: float32
   Precip: float32
   VPD: float32
   LAI: float32
-  H2OSOI: float32
+  SM: float32
   TOTVEGC: float32
   TOTSOMC: float32
   PCT_CFT: float32
@@ -129,6 +135,21 @@ variable_dimensions:
   SM:
     - time
     - layer
+    - lat
+    - lon
+  GPP_pft:
+    - time
+    - pft
+    - lat
+    - lon
+  ET_pft:
+    - time
+    - pft
+    - lat
+    - lon
+  Tr_pft:
+    - time
+    - pft
     - lat
     - lon
   TOTVEGC:
@@ -193,6 +214,21 @@ variable_attributes:
     standard_name: transpiration
     long_name: Transpiration
     source: land surface model
+  GPP_pft:
+    units: gC m-2 day-1
+    standard_name: gross_primary_productivity
+    long_name: Gross Primary Productivity
+    source: land surface model
+  ET_pft:
+    units: mm m-2 day-1
+    standard_name: evapotranspiration
+    long_name: Evapotranspiration
+    source: land surface model
+  Tr_pft:
+    units: mm m-2 day-1
+    standard_name: transpiration
+    long_name: Transpiration
+    source: land surface model
   LAI:
     units: m2 m-2
     standard_name: leaf_area_index
@@ -248,9 +284,11 @@ global_attributes:
   land_surface_model: Community Land Movel v5 
   land_surface_model_version: release-clm5.0.34-24-gdc5ea974
   surface_dataset: surfdata_CLM5EU3_FATES_east[west]_v3.nc
-  pft:  "Bare ground, NET Temperate, NET Boreal, NDT Boreal, BET Tropical, BET Temperate, BDT tropical, BDT temperate, BDT boreal, BES temperate, BDS temperate, BDS boreal, C3 grass arctic, C3 grass, C4 grass"
-  pft_abbreviations: "NET: Needleleaf Evergreen Tree; NDT: Needleleaf Deciduous Tree; BET: Broadleaf Evergreen Tree; BDT: Broadleaf Deciduous Tree; BES: Broadleaf Evergreen Shrub; BDS: Broadleaf Deciduous Shrub"
-  layer_depths: "0.010, 0.040, 0.090, 0.160, 0.260, 0.400, 0.580, 0.800, 1.060, 1.360, 1.700, 2.080, 2.500, 2.990, 3.580, 4.270, 5.060, 5.950, 6.940, 8.030]"
+  vegtype_names: "0: Bare ground, 1: NET Temperate, 2: NET Boreal, 3: NDT Boreal, 4: BET Tropical, 5: BET Temperate, 6: BDT tropical, 7: BDT temperate, 8: BDT boreal, 9: BES temperate, 10: BDS temperate, 11: BDS boreal, 12: C3 grass arctic, 13: C3 grass, 14: C4 grass"
+  croptype_names: "0: Rainfed Crop, 1: Irrigated Crop"
+  pft_info: "PFT_level state variables have the vegtype and croptype dimensions concatenated to PFT dimension size 17 (15 vegtype + 2 croptype)"
+  vegtype_abbreviations: "NET: Needleleaf Evergreen Tree; NDT: Needleleaf Deciduous Tree; BET: Broadleaf Evergreen Tree; BDT: Broadleaf Deciduous Tree; BES: Broadleaf Evergreen Shrub; BDS: Broadleaf Deciduous Shrub"
+  layer_depths: "0.010, 0.040, 0.090, 0.160, 0.260, 0.400, 0.580, 0.800, 1.060, 1.360, 1.700, 2.080, 2.500, 2.990, 3.580, 4.270, 5.060, 5.950, 6.940, 8.030"
   atmospheric_data: COSMOREA6
   atmospheric_data_link: https://reanalysis.meteo.uni-bonn.de/?COSMO-REA6
   atmospheric_postprocessing: remapped via ESMF_regrid_with_weights, first-order conservative

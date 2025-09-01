@@ -50,7 +50,7 @@ def save_selected_variables(ds: Dataset,
 
                 var_name_dst = var_names.get(var_name, var_name)
 
-                if var_name in new_ds.variables:
+                if group == 'pft':
                     var_name_dst = var_name_dst + f"_{group}"
 
                 print(f"writing variable {var_name}: {var_name_dst}, {var_dims[var_name_dst]}, {var_dtype[var_name_dst]}")
@@ -73,8 +73,8 @@ def main():
     # Settings
     config_path = 'config.yaml'
     out_dir = 'out/CWF_WUE_DP/'
-    out_file = 'out.nc'
-    groups = ['surface', 'coords', 'grid', 'pft', 'forcings']
+    out_file = 'eLTER_CWF_WUE_DP_v1.0.nc'
+    groups = ['coords', 'surface', 'forcings', 'grid', 'pft']
     fill_value = np.nan
     
     # Directories
