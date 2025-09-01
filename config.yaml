@@ -168,8 +168,6 @@ variable_dimensions:
   time: 
     - time
 
-
-
 variable_attributes:
   latitude:
     units: degrees_north
@@ -266,7 +264,7 @@ global_attributes:
   licence: FZJ European 3km Community Land Model v5 - Biogeochemical Mode; Water-Use Efficiency Dataset (c) 2025 by Christian Poppe Terán, Alexandre Belleflamme, Bibi S. Naz, Harrie-Jan Hendricks-Franssen, and Harry Vereecken of Forschungszentrum Jülich (Germany) is licensed under Creative Commons Attribution 4.0 International. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/
   licence_url: https://creativecommons.org/licenses/by/4.0/deed.en
   experiment: CLM5_BGC_EU3_eLTER_006
-  land_surface_model: Community Land Movel v5 
+  land_surface_model: Community Land Model v5 
   land_surface_model_version: release-clm5.0.34-24-gdc5ea974
   surface_dataset: surfdata_CLM5EU3_FATES_east[west]_v3.nc
   vegtype_names: "0: Bare ground, 1: NET Temperate, 2: NET Boreal, 3: NDT Boreal, 4: BET Tropical, 5: BET Temperate, 6: BDT tropical, 7: BDT temperate, 8: BDT boreal, 9: BES temperate, 10: BDS temperate, 11: BDS boreal, 12: C3 grass arctic, 13: C3 grass, 14: C4 grass"
