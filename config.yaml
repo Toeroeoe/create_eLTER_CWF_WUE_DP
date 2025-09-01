@@ -1,32 +1,39 @@
 dimensions:
   time: 
     size: 1104
-    limited: True
+    limited: False
     day_step: 8
     years: 24
   lat: 
     size: 1544
-    limited: False
+    limited: True
   lon: 
     size: 1592
-    limited: False
+    limited: True
+  layer:
+    size: 20
+    limited: True
+  croptype:
+    size: 2
+    limited: True
   vegtype:
     size: 15
-    limited: False
-    selection:
-      NET:
-        - 1
-        - 2
-      BDT:
-        - 7
-        - 8
-      GRA:
-        - 12
-        - 13
-        - 14
-      CRO:
-        - 15
-        - 16
+    limited: True
+    #selection:
+    #  NET:
+    #    - 1
+    #    - 2
+    #  BDT:
+    #    - 7
+    #    - 8
+    #  GRA:
+    #    - 12
+    #    - 13
+    #    - 14
+    #  CRO:
+    #    - 15
+    #    - 16
+
 
 paths:
   coords: /p/data1/jibg31/poppe1/EDWUE/EDWUE/8daily/
@@ -46,7 +53,7 @@ variables:
     - TLAI
     - TOTVEGC
     - TOTSOMC
-    #- H2OSOI
+    - H2OSOI
   forcings:
     - VPD
     - P
@@ -55,10 +62,22 @@ variables:
     - PCT_NATVEG
     - PCT_CFT
     - PCT_NAT_PFT
-#  pft:
-#    - GPP
-#    - Tr
-#    - ET
+  pft:
+    - GPP
+    - Tr
+    - ET
+
+variable_names:
+  GPP: GPP
+  QFLX_EVAP_TOT: ET
+  QFLX_EVAP_VEG: Tr
+  P: Precip
+  VPD: VPD
+  TLAI: LAI
+  H2OSOI: SM
+  latitude: latitude
+  longitude: longitude
+  time: time
 
 variable_factor:
   GPP: 86400
@@ -72,6 +91,7 @@ variable_dtype:
   Precip: float32
   VPD: float32
   LAI: float32
+  H2OSOI: float32
   TOTVEGC: float32
   TOTSOMC: float32
   PCT_CFT: float32
@@ -106,6 +126,11 @@ variable_dimensions:
     - time
     - lat
     - lon
+  SM:
+    - time
+    - layer
+    - lat
+    - lon
   TOTVEGC:
     - time
     - lat
@@ -121,9 +146,11 @@ variable_dimensions:
     - lat
     - lon
   PCT_CFT:
+    - croptype
     - lat
     - lon
   PCT_NAT_PFT:
+    - vegtype
     - lat
     - lon
   latitude:
@@ -135,16 +162,7 @@ variable_dimensions:
   time: 
     - time
 
-variable_names:
-  GPP: GPP
-  QFLX_EVAP_TOT: ET
-  QFLX_EVAP_VEG: Tr
-  P: Precip
-  VPD: VPD
-  TLAI: LAI
-  latitude: latitude
-  longitude: longitude
-  time: time
+
 
 variable_attributes:
   latitude:
@@ -174,6 +192,26 @@ variable_attributes:
     units: mm m-2 day-1
     standard_name: transpiration
     long_name: Transpiration
+    source: land surface model
+  LAI:
+    units: m2 m-2
+    standard_name: leaf_area_index
+    long_name: Leaf Area Index
+    source: land surface model
+  TOTVEGC:
+    units: gC m-2
+    standard_name: total_vegetation_carbon
+    long_name: Total Vegetation Carbon
+    source: land surface model
+  TOTSOMC:
+    units: gC m-2
+    standard_name: total_soil_organic_carbon
+    long_name: Total Soil Organic Carbon
+    source: land surface model
+  SM:
+    units: m3 m-3
+    standard_name: soil_moisture
+    long_name: Soil Moisture
     source: land surface model
   VPD:
     units: kPa
@@ -210,6 +248,9 @@ global_attributes:
   land_surface_model: Community Land Movel v5 
   land_surface_model_version: release-clm5.0.34-24-gdc5ea974
   surface_dataset: surfdata_CLM5EU3_FATES_east[west]_v3.nc
+  pft:  "Bare ground, NET Temperate, NET Boreal, NDT Boreal, BET Tropical, BET Temperate, BDT tropical, BDT temperate, BDT boreal, BES temperate, BDS temperate, BDS boreal, C3 grass arctic, C3 grass, C4 grass"
+  pft_abbreviations: "NET: Needleleaf Evergreen Tree; NDT: Needleleaf Deciduous Tree; BET: Broadleaf Evergreen Tree; BDT: Broadleaf Deciduous Tree; BES: Broadleaf Evergreen Shrub; BDS: Broadleaf Deciduous Shrub"
+  layer_depths: "0.010, 0.040, 0.090, 0.160, 0.260, 0.400, 0.580, 0.800, 1.060, 1.360, 1.700, 2.080, 2.500, 2.990, 3.580, 4.270, 5.060, 5.950, 6.940, 8.030]"
   atmospheric_data: COSMOREA6
   atmospheric_data_link: https://reanalysis.meteo.uni-bonn.de/?COSMO-REA6
   atmospheric_postprocessing: remapped via ESMF_regrid_with_weights, first-order conservative

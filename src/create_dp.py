@@ -10,15 +10,24 @@ def get_nc_files_from_config(config_path: str, group: str) -> list[str]:
             raise ValueError("Configuration file is empty or invalid.")
     nc_files = []
     dir_path = config['paths'][group]
+    if os.path.isfile(dir_path):
+        if dir_path.endswith('.nc'): # single file
+            return [dir_path]
+        else: return []
     for file in os.listdir(dir_path):
         if file.endswith('.nc'):
             nc_files.append(os.path.join(dir_path, file))
     return nc_files
 
-def open_mfdataset_from_config(config_path: str, group: str) -> MFDataset:
+def open_mfdataset_from_config(config_path: str, group: str) -> MFDataset | Dataset:
     nc_files = get_nc_files_from_config(config_path, group)
+
     if not nc_files:
         raise FileNotFoundError("No NetCDF files found in the specified directories.")
+    
+    if len(nc_files) == 1:
+        return Dataset(nc_files[0])
+    
     mfdataset = MFDataset(nc_files)
     return mfdataset
 
@@ -65,8 +74,8 @@ def main():
     config_path = 'config.yaml'
     out_dir = 'out/CWF_WUE_DP/'
     out_file = 'out.nc'
-    groups = ['coords', 'grid', 'pft', 'forcings', 'surface']
-    fill_value = 1e20
+    groups = ['surface', 'coords', 'grid', 'pft', 'forcings']
+    fill_value = np.nan
     
     # Directories
     os.makedirs(out_dir, exist_ok=True)
@@ -96,7 +105,7 @@ def main():
         # Create new NetCDF4 file
         # Copy dimensions
         for dim, props in dims_dict.items():
-            new_ds.createDimension(dim, size=(props['size'] if not props['limited'] else None))
+            new_ds.createDimension(dim, size=(props['size'] if props['limited'] else None))
         
         # Create time coordinate variable and array
         time_var = new_ds.createVariable('time', 'int32', 'time')
