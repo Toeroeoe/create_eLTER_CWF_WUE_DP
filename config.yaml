@@ -3,7 +3,10 @@ dimensions:
     size: 1104
     limited: False
     day_step: 8
+    start_year: 1995
+    end_year: 2018
     years: 24
+    leapday: False
   lat: 
     size: 1544
     limited: True
@@ -179,7 +182,7 @@ variable_attributes:
     long_name: Longitude
   time:
     calendar: standard
-    units: days since 1995-01-01
+    #units: days since 1995-01-01
     standard_name: time
     timestamp_label_side: left
   GPP:
@@ -267,7 +270,7 @@ global_attributes:
   land_surface_model: Community Land Model v5 
   land_surface_model_version: release-clm5.0.34-24-gdc5ea974
   surface_dataset: surfdata_CLM5EU3_FATES_east[west]_v3.nc
-  vegtype_names: "0: Bare ground, 1: NET Temperate, 2: NET Boreal, 3: NDT Boreal, 4: BET Tropical, 5: BET Temperate, 6: BDT tropical, 7: BDT temperate, 8: BDT boreal, 9: BES temperate, 10: BDS temperate, 11: BDS boreal, 12: C3 grass arctic, 13: C3 grass, 14: C4 grass"
+  vegtype_names: "0: Bare ground, 1: NET Temperate, 2: NET Boreal, 3: NDT Boreal, 4: BET Tropical, 5: BET Temperate, 6: BDT Tropical, 7: BDT Temperate, 8: BDT Boreal, 9: BES Temperate, 10: BDS Temperate, 11: BDS Boreal, 12: C3 Grass arctic, 13: C3 Grass, 14: C4 Grass"
   croptype_names: "0: Rainfed Crop, 1: Irrigated Crop"
   pft_info: "PFT_level state variables have the vegtype and croptype dimensions concatenated to PFT dimension size 17 (15 vegtype + 2 croptype)"
   vegtype_abbreviations: "NET: Needleleaf Evergreen Tree; NDT: Needleleaf Deciduous Tree; BET: Broadleaf Evergreen Tree; BDT: Broadleaf Deciduous Tree; BES: Broadleaf Evergreen Shrub; BDS: Broadleaf Deciduous Shrub"
@@ -278,12 +281,11 @@ global_attributes:
   postprocessing: resampled to 8-daily means and transformed to [per day] units
   project: eLTER PLUS
   domain: CORDEX-EU
-  DOI: ""
+  DOI: https://doi.org/10.26165/JUELICH-DATA/UUCUVI
   created by: Christian Poppe Terán
-  citation: Poppe Terán, Christian; Belleflamme, Alexandre; Naz S., Bibi; Hendricks-Franssen, Harrie-Jan; Vereecken, Harry; 2025, "European 3km CLM5-BGC Water-Use Efficiency Dataset", https://doi.org/10.26165/JUELICH-DATA/GROHKP, Jülich DATA, V1
+  citation: Poppe Terán, Christian; Belleflamme, Alexandre; Naz S., Bibi; Hendricks-Franssen, Harrie-Jan; Vereecken, Harry; 2025, "European 3km CLM5-BGC Water-Use Efficiency Dataset", https://doi.org/10.26165/JUELICH-DATA/UUCUVI, Jülich DATA, V1
   title: European 3km CLM5-BGC Water-Use Efficiency Dataset
   comment: "Land surface model simulation performed by Research Centre Juelich, Institute of Bio- and Geosciences (IBG-3); simulation and processing: Christian Poppe Terán c.poppe@fz-juelich.de (ORCID=0000-0003-2283-0462), Alexandre Belleflamme, Bibi S. Naz, Harrie-Jan Hendricks-Franssen, Harry Vereecken"
-  date: "2025-08-27"
   version: 1.0
   institution: Institute of Bio and Geosciences - Agrosphere (IBG-3), Research Centre Jülich
   contact: c.poppe@fz-juelich.de
